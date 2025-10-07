@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { NavLinks } from '.'
 import BurgerMenu from './burger-menu'
 import RegionSelector from './region-selector'
-import CartBadge from './cart-badge'
+import CartPreview from './cart-preview'
 import { getRegions } from '@/lib/data/regions'
 import ClientToastErrorHandler from '@/components/feedback/client-toast-error-handler'
 import { getRegionId, setRegionId } from '@/lib/cookies'
@@ -17,8 +17,6 @@ export default async function SiteHeader() {
   const currentRegion = regions.find((r) => r.id === regionId) || null
 
   const { cart } = await getCart()
-  const cartItemCount =
-    cart?.items?.reduce((total, item) => total + item.quantity, 0) ?? 0
 
   return (
     <ClientToastErrorHandler errors={[regionsError, currentRegionError]}>
@@ -91,7 +89,7 @@ export default async function SiteHeader() {
               />
             </div>
 
-            <CartBadge itemCount={cartItemCount} />
+            <CartPreview cart={cart} />
           </nav>
         </div>
       </header>
