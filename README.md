@@ -92,6 +92,22 @@ npm run build
 npm start
 ```
 
+### Run with Docker
+
+Build the production image:
+
+```shell
+docker build -t h2bc-web-front .
+```
+
+Start the container (pass your environment file or individual variables):
+
+```shell
+docker run --rm -p 3000:3000 --env-file .env.local h2bc-web-front
+```
+
+The app will be available at http://localhost:3000.
+
 ---
 
 # Resources
