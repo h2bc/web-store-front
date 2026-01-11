@@ -1,14 +1,16 @@
 import { NavLinks } from '@/components/layout/header'
 import Script from 'next/script'
 
+const MODEL_ASSET_PATH = '/h2bc_3d_logo.glb'
+
 export default function Home() {
   return (
     <div className="flex-1 flex items-center justify-center">
       <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-        <div className="aspect-square w-56 sm:w-64 md:w-72">
+        <div className="aspect-square w-56 sm:w-64 md:w-80">
           {/* @ts-expect-error: model-viewer is a custom element */}
           <model-viewer
-            src="/y2k_sport_sunglass.glb"
+            src={MODEL_ASSET_PATH}
             camera-controls
             disable-zoom
             disable-pan
@@ -16,13 +18,6 @@ export default function Home() {
             auto-rotate
             auto-rotate-speed="500"
             class="block w-full h-full"
-            style={
-              {
-                '--progress-bar-height': 0,
-                '--progress-bar-color': 'transparent',
-                '--poster-color': 'transparent',
-              } as React.CSSProperties
-            }
           />
         </div>
 
