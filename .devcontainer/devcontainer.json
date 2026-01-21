@@ -1,0 +1,30 @@
+{
+  "name": "h2bc-web-dev",
+  "image": "node:20-bookworm",
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    "type=bind,source=${localWorkspaceFolder},target=/workspace",
+    "source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent.sock,type=bind"
+  ],
+  "postCreateCommand": "npm i",
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "/ssh-agent.sock"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "username": "node"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "openai.chatgpt",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-ossdata.vscode-pgsql",
+        "github.vscode-github-actions"
+      ]
+    }
+  },
+  "remoteUser": "node"
+}
