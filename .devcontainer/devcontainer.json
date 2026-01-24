@@ -2,6 +2,7 @@
   "name": "h2bc-web-dev",
   "image": "node:20-bookworm",
   "workspaceFolder": "/workspace",
+  "runArgs": ["--network=h2bc-web-dev"],
   "mounts": [
     "type=bind,source=${localWorkspaceFolder},target=/workspace",
     "source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent.sock,type=bind"
@@ -21,7 +22,6 @@
         "openai.chatgpt",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "ms-ossdata.vscode-pgsql",
         "github.vscode-github-actions"
       ]
     }
