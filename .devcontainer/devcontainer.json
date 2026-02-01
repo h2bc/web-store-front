@@ -5,11 +5,13 @@
   "runArgs": ["--network=h2bc-web-dev"],
   "mounts": [
     "type=bind,source=${localWorkspaceFolder},target=/workspace",
-    "source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent.sock,type=bind"
+    "source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent.sock,type=bind",
+    "type=bind,source=${localEnv:HOME}/.codex-shared,target=/codex"
   ],
   "postCreateCommand": "npm i",
   "remoteEnv": {
-    "SSH_AUTH_SOCK": "/ssh-agent.sock"
+    "SSH_AUTH_SOCK": "/ssh-agent.sock",
+    "CODEX_HOME": "/codex"
   },
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
@@ -21,7 +23,6 @@
       "extensions": [
         "openai.chatgpt",
         "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
         "github.vscode-github-actions"
       ]
     }
