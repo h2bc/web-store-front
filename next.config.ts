@@ -1,16 +1,35 @@
 import type { NextConfig } from 'next'
 
-const nextConfig: NextConfig = {
-  output: 'standalone',
-  images: {
+let imagesConfig: NextConfig['images']
+
+if (process.env.NODE_ENV === 'production') {
+  imagesConfig = {
+    unoptimized: false,
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'storage.h2bcweb.com',
+        hostname: process.env.S3_ENDPOINT!,
         pathname: '/**',
       },
     ],
-  },
+  }
+} else {
+  imagesConfig = {
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '9000',
+        pathname: '/static/**',
+      },
+    ],
+  }
+}
+
+const nextConfig: NextConfig = {
+  output: 'standalone',
+  images: imagesConfig,
   async headers() {
     return [
       {
