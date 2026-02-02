@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: process.env.S3_ENDPOINT!,
+        hostname: 'storage.h2bcweb.com',
         pathname: '/**',
       },
     ],
