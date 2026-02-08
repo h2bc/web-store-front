@@ -12,6 +12,7 @@ const fetchProducts = async (regionId: string) => {
     async () => {
       const { products } = await sdk.store.product.list({
         region_id: regionId,
+        order: '-created_at',
         fields:
           'id,handle,title,' +
           'images,images.url,' +
