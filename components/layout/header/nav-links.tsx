@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 interface NavLinksProps {
   ulClassName?: string
   linkClassName?: string
+  onNavigate?: () => void
 }
 
 const navItems = [
@@ -19,6 +20,7 @@ const navItems = [
 export default function NavLinks({
   ulClassName = '',
   linkClassName = '',
+  onNavigate,
 }: NavLinksProps) {
   const pathname = usePathname()
 
@@ -31,6 +33,7 @@ export default function NavLinks({
           <li key={href}>
             <Link
               href={href}
+              onClick={onNavigate}
               className={cn(
                 'font-blackletter hover:text-shadow-xl hover:text-shadow-pink-500 transition-all duration-300',
                 linkClassName,

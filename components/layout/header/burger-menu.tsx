@@ -25,6 +25,7 @@ export default function BurgerMenu() {
         <NavLinks
           ulClassName="flex flex-col items-stretch py-2 divide-y divide-black/10"
           linkClassName="block w-full text-center px-6 py-4 text-2xl"
+          onNavigate={() => setIsOpen(false)}
         />
       </CollapsibleContent>
     </Collapsible>
