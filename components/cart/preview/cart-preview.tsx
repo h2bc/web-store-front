@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { ShoppingBag } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { IconBadge } from '@/components/ui/icon-badge'
+import { formatPrice } from '@/lib/utils'
 import {
   Sheet,
   SheetContent,
@@ -71,7 +72,7 @@ export default function CartPreview({ cart }: CartPreviewProps) {
           {cart?.items && cart.items.length > 0 ? (
             <>
               {/* Cart Items - scrollable area */}
-              <div className="flex-1 overflow-y-auto -mx-6 px-6 divide-y">
+              <div className="flex-1 overflow-y-auto -mx-6 px-8 -mt-10 pt-12 pb-2 divide-y">
                 {cart.items.map((item) => (
                   <CartPreviewItem
                     key={item.id}
@@ -93,6 +94,13 @@ export default function CartPreview({ cart }: CartPreviewProps) {
                     Learn more
                   </Link>
                 </p>
+              </div>
+
+              <div className="flex items-center justify-between py-2 text-sm">
+                <span className="text-muted-foreground">Subtotal (VAT included)</span>
+                <span className="font-medium">
+                  {formatPrice(cart.item_total, cart.currency_code)}
+                </span>
               </div>
 
               {/* Action Buttons */}

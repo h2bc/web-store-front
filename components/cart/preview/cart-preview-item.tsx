@@ -26,11 +26,11 @@ export default function CartPreviewItem({
   const [isRemoving, setIsRemoving] = useState(false)
   const [isPending, startTransition] = useTransition()
 
-  const thumbnail = item.variant?.product?.thumbnail || item.thumbnail
-  const title = item.variant?.product?.title || item.title
-  const subtitle = item.variant?.product?.subtitle
-  const variantTitle = item.variant?.title
-  const slug = item.variant?.product?.handle
+  const thumbnail = item.thumbnail
+  const title = item.product_title
+  const subtitle = item.product_subtitle
+  const size = item.variant_title
+  const slug = item.product_handle
 
   const handleRemove = async () => {
     setIsRemoving(true)
@@ -39,7 +39,6 @@ export default function CartPreviewItem({
     if (error) {
       toast.error(error)
     } else {
-      toast.success('Item removed from cart')
       startTransition(() => {
         router.refresh()
         onRemoveSuccess?.()
@@ -52,68 +51,71 @@ export default function CartPreviewItem({
   return (
     <div className="flex gap-4 py-4">
       {/* Thumbnail */}
-      {thumbnail && slug && (
-        <Link href={`/shop/${slug}`} className="relative flex-shrink-0">
-          <div className="relative w-20 h-20">
+      {thumbnail && (
+        <div className="relative flex-shrink-0 w-20 h-20 overflow-visible pink-img-shadow">
+          {slug ? (
+            <Link href={`/shop/${slug}`} className="relative block w-full h-full">
+              <Image
+                src={thumbnail}
+                alt={title || 'Product'}
+                fill
+                className="object-contain"
+                sizes="80px"
+              />
+            </Link>
+          ) : (
             <Image
               src={thumbnail}
               alt={title || 'Product'}
               fill
-              className="pink-img-shadow object-contain"
+              className="object-contain"
               sizes="80px"
             />
-          </div>
-        </Link>
+          )}
+        </div>
       )}
 
       {/* Details */}
       <div className="flex-1 min-w-0">
-        <div className="flex justify-between gap-2">
-          <div className="flex-1 min-w-0">
-            {slug ? (
-              <Link
-                href={`/shop/${slug}`}
-                className="text-base font-medium hover:underline line-clamp-1"
-              >
-                {title}
-              </Link>
-            ) : (
-              <p className="text-base font-medium line-clamp-1">{title}</p>
-            )}
-
-            {subtitle && (
-              <p className="text-sm text-muted-foreground line-clamp-1">
-                {subtitle}
-              </p>
-            )}
-
-            {variantTitle && variantTitle !== 'Default Variant' && (
-              <p className="text-sm text-muted-foreground">{variantTitle}</p>
-            )}
-
-            <p className="text-sm text-muted-foreground mt-1">
-              Qty: {item.quantity}
-            </p>
-          </div>
-
-          {/* Remove button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="flex-shrink-0 h-8 w-8"
-            onClick={handleRemove}
-            disabled={isRemoving || isPending}
-            aria-label="Remove item"
+        {slug ? (
+          <Link
+            href={`/shop/${slug}`}
+            className="text-base font-medium hover:underline line-clamp-1"
           >
-            <Trash2 className="h-4 w-4" />
-          </Button>
-        </div>
+            {title}
+          </Link>
+        ) : (
+          <p className="text-base font-medium line-clamp-1">{title}</p>
+        )}
+
+        {subtitle && (
+          <p className="text-sm text-muted-foreground line-clamp-1">
+            {subtitle}
+          </p>
+        )}
+
+        <p className="text-sm text-muted-foreground mt-1">
+          {size && size !== 'Default Variant' ? `Size: ${size} · ` : ''}
+          Qty: {item.quantity}
+        </p>
 
         {/* Price */}
         <div className="text-base font-medium mt-2">
           {formatPrice(item.unit_price, currencyCode)}
         </div>
       </div>
+
+      {/* Remove button */}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="flex-shrink-0 self-center h-8 w-8"
+        onClick={handleRemove}
+        disabled={isRemoving || isPending}
+        aria-label="Remove item"
+      >
+        <Trash2 className="h-4 w-4" />
+      </Button>
     </div>
   )
 }
