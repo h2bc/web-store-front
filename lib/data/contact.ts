@@ -4,7 +4,7 @@ import xss from 'xss'
 import {
   contactFormSchema,
   type ContactFormResponse,
-} from '@/components/contact/types'
+} from '@/lib/schemas/contact'
 
 export async function submitContactMessage(
   data: unknown

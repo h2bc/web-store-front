@@ -23,7 +23,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { contactFormSchema, contactTopics, type ContactFormData } from './types'
+import {
+  contactFormSchema,
+  contactTopics,
+  type ContactFormData,
+} from '@/lib/schemas/contact'
 import { submitContactMessage } from '@/lib/data/contact'
 
 export default function ContactForm() {

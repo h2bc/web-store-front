@@ -1,4 +1,4 @@
-import { NavLinks } from '@/components/layout/header'
+import NavLinks from '@/components/layout/header/nav-links'
 import Script from 'next/script'
 
 const MODEL_ASSET_PATH = '/h2bc_3d_logo.glb'
