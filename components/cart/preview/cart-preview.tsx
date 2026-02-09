@@ -46,6 +46,10 @@ export default function CartPreview({ cart }: CartPreviewProps) {
     }
   }
 
+  const handleNavigateFromDrawer = () => {
+    setOpen(false)
+  }
+
   return (
     <>
       <Button variant="ghost" onClick={handleCartClick} aria-label="Cart">
@@ -79,6 +83,7 @@ export default function CartPreview({ cart }: CartPreviewProps) {
                     item={item}
                     currencyCode={cart.currency_code}
                     onRemoveSuccess={handleRemoveSuccess}
+                    onNavigate={handleNavigateFromDrawer}
                   />
                 ))}
               </div>
@@ -90,6 +95,7 @@ export default function CartPreview({ cart }: CartPreviewProps) {
                   <Link
                     href="/shipping-returns"
                     className="underline hover:text-foreground"
+                    onClick={handleNavigateFromDrawer}
                   >
                     Learn more
                   </Link>
@@ -106,10 +112,14 @@ export default function CartPreview({ cart }: CartPreviewProps) {
               {/* Action Buttons */}
               <div className="flex flex-col gap-2 pt-2">
                 <Button asChild size="lg">
-                  <Link href="/checkout">Checkout</Link>
+                  <Link href="/checkout" onClick={handleNavigateFromDrawer}>
+                    Checkout
+                  </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">
-                  <Link href="/cart">Go to cart</Link>
+                  <Link href="/cart" onClick={handleNavigateFromDrawer}>
+                    Go to cart
+                  </Link>
                 </Button>
               </div>
             </>
@@ -119,7 +129,9 @@ export default function CartPreview({ cart }: CartPreviewProps) {
                 <ShoppingBag className="mx-auto h-12 w-12 mb-4 opacity-50" />
                 <p>Your cart is empty</p>
                 <Button asChild className="mt-4" variant="outline">
-                  <Link href="/shop">Continue shopping</Link>
+                  <Link href="/shop" onClick={handleNavigateFromDrawer}>
+                    Continue shopping
+                  </Link>
                 </Button>
               </div>
             </div>

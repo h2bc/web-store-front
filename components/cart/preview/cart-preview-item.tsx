@@ -15,12 +15,14 @@ interface CartPreviewItemProps {
   item: HttpTypes.StoreCartLineItem
   currencyCode?: string
   onRemoveSuccess?: () => void
+  onNavigate?: () => void
 }
 
 export default function CartPreviewItem({
   item,
   currencyCode,
   onRemoveSuccess,
+  onNavigate,
 }: CartPreviewItemProps) {
   const router = useRouter()
   const [isRemoving, setIsRemoving] = useState(false)
@@ -54,7 +56,11 @@ export default function CartPreviewItem({
       {thumbnail && (
         <div className="relative flex-shrink-0 w-20 h-20 overflow-visible pink-img-shadow">
           {slug ? (
-            <Link href={`/shop/${slug}`} className="relative block w-full h-full">
+            <Link
+              href={`/shop/${slug}`}
+              className="relative block w-full h-full"
+              onClick={() => onNavigate?.()}
+            >
               <Image
                 src={thumbnail}
                 alt={title || 'Product'}
@@ -81,6 +87,7 @@ export default function CartPreviewItem({
           <Link
             href={`/shop/${slug}`}
             className="text-base font-medium hover:underline line-clamp-1"
+            onClick={() => onNavigate?.()}
           >
             {title}
           </Link>
