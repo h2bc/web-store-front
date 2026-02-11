@@ -1,3 +1,8 @@
+export interface ProductImage {
+  id: string
+  url: string
+}
+
 export interface SizeOption {
   value: string
   available: boolean
@@ -20,4 +25,16 @@ export interface ProductVariant {
 export interface ProductOption {
   id: string
   title: string
+}
+
+export interface ProductDetail {
+  slug: string
+  name: string
+  subtitle: string
+  images: ProductImage[]
+  sizes: SizeOption[]
+  description: string
+  alert?: string
+  variants: ProductVariant[]
+  options: ProductOption[]
 }

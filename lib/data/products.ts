@@ -1,15 +1,33 @@
 'use server'
 
 import { sdk } from '@/lib/medusa'
-import type { StoreProduct } from '@medusajs/types'
+import type { HttpTypes } from '@medusajs/types'
 import { getRegionId } from '@/lib/cookies'
 import { cached } from '@/lib/cache'
+import type { ProductItem } from '@/lib/types/product'
+import type {
+  ProductDetail,
+  ProductOption,
+  ProductVariant,
+  SizeOption,
+} from '@/lib/types/product-detail'
 
 const CACHE_REVALIDATE_TIME = 60
 
-const fetchProducts = async (regionId: string) => {
+type ProductsResult = {
+  products: ProductItem[]
+  error: string | null
+}
+
+type ProductByHandleResult = {
+  product: ProductDetail | null
+  error: string | null
+  notFound: boolean
+}
+
+const fetchProducts = async (regionId: string): Promise<ProductItem[]> => {
   return cached(
-    async () => {
+    async (): Promise<ProductItem[]> => {
       const { products } = await sdk.store.product.list({
         region_id: regionId,
         order: '-created_at',
@@ -20,7 +38,7 @@ const fetchProducts = async (regionId: string) => {
           '*variants, *variants.options, *variants.inventory_quantity',
       })
 
-      return products.map((p: StoreProduct) => {
+      return products.map((p: HttpTypes.StoreProduct): ProductItem => {
         const allVariantsManaged =
           p.variants?.every((v) => v.manage_inventory) ?? false
         const totalQty =
@@ -51,7 +69,7 @@ const fetchProducts = async (regionId: string) => {
   )()
 }
 
-export async function getProducts() {
+export async function getProducts(): Promise<ProductsResult> {
   const regionId = await getRegionId()
 
   if (!regionId) {
@@ -77,9 +95,12 @@ export async function getProducts() {
   }
 }
 
-const fetchProductDetails = async (handle: string, regionId: string) => {
+const fetchProductDetails = async (
+  handle: string,
+  regionId: string
+): Promise<ProductDetail | null> => {
   return cached(
-    async () => {
+    async (): Promise<ProductDetail | null> => {
       const { products } = await sdk.store.product.list({
         handle,
         region_id: regionId,
@@ -99,7 +120,11 @@ const fetchProductDetails = async (handle: string, regionId: string) => {
         (o) => o.title?.toLowerCase() === 'size'
       )
 
-      const sizeVariants =
+      const sizeVariants: {
+        size: string | undefined
+        rank: number | null | undefined
+        available: boolean
+      }[] =
         product.variants
           ?.map((v) => ({
             size: v.options?.find((o) => o.option_id === sizeOption?.id)?.value,
@@ -119,7 +144,7 @@ const fetchProductDetails = async (handle: string, regionId: string) => {
         )
       })
 
-      const sizes = [
+      const sizes: SizeOption[] = [
         ...new Map(
           sizeVariants.map((item) => [item.size, item.rank])
         ).entries(),
@@ -132,11 +157,11 @@ const fetchProductDetails = async (handle: string, regionId: string) => {
           option_id: sizeOption?.id ?? '',
         }))
 
-      const categoryAlert = product.categories?.[0]?.metadata?.alert as
-        | string
-        | undefined
+      const categoryAlertValue = product.categories?.[0]?.metadata?.alert
+      const categoryAlert =
+        typeof categoryAlertValue === 'string' ? categoryAlertValue : undefined
 
-      const variants =
+      const variants: ProductVariant[] =
         product.variants?.map((v) => ({
           id: v.id,
           title: v.title ?? '',
@@ -151,6 +176,12 @@ const fetchProductDetails = async (handle: string, regionId: string) => {
             })) ?? [],
         })) ?? []
 
+      const options: ProductOption[] =
+        product.options?.map((o) => ({
+          id: o.id,
+          title: o.title,
+        })) ?? []
+
       return {
         slug: product.handle,
         name: product.title,
@@ -163,11 +194,7 @@ const fetchProductDetails = async (handle: string, regionId: string) => {
         description: product.description ?? '',
         alert: categoryAlert,
         variants,
-        options:
-          product.options?.map((o) => ({
-            id: o.id,
-            title: o.title,
-          })) ?? [],
+        options,
       }
     },
     [`product-${handle}-${regionId}`],
@@ -178,15 +205,19 @@ const fetchProductDetails = async (handle: string, regionId: string) => {
   )()
 }
 
-export async function getProductByHandle(handle: string) {
+export async function getProductByHandle(
+  handle: string
+): Promise<ProductByHandleResult> {
   const regionId = await getRegionId()
 
   if (!regionId) {
     return {
-      products: [],
+      product: null,
       error: 'Region is not set',
+      notFound: false,
     }
   }
+
   try {
     const product = await fetchProductDetails(handle, regionId)
 

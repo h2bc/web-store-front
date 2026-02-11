@@ -6,11 +6,12 @@ import { Button } from '@/components/ui/button'
 import { IoCloseSharp } from 'react-icons/io5'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { screens } from '@/lib/breakpoints'
+import type { ProductImage } from '@/lib/types/product-detail'
 
 interface ProductImageModalProps {
   open: boolean
   onClose: () => void
-  images: { id: string; url: string }[]
+  images: ProductImage[]
   activeIndex: number
   setActiveIndex: (idx: number) => void
   name: string

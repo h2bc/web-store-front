@@ -6,14 +6,17 @@ import { Button } from '@/components/ui/button'
 import ProductImageModal from './product-image-modal'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { screens } from '@/lib/breakpoints'
+import type { ProductImage } from '@/lib/types/product-detail'
+
+interface ProductImageCarouselProps {
+  images: ProductImage[]
+  name: string
+}
 
 export default function ProductImageCarousel({
   images,
   name,
-}: {
-  images: { id: string; url: string }[]
-  name: string
-}) {
+}: ProductImageCarouselProps) {
   const [activeImage, setActiveImage] = useState(0)
   const canNavigate = images.length > 1
   const goPrev = () =>

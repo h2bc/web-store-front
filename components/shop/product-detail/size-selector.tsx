@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import type { SizeOption } from './types'
+import type { SizeOption } from '@/lib/types/product-detail'
 
 interface SizeSelectorProps {
   sizes: SizeOption[]
