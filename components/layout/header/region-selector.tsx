@@ -9,17 +9,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useTransition } from 'react'
-
-interface Region {
-  id: string
-  name: string
-  shortName?: string
-  currencyCode: string
-}
+import type { RegionSummary } from '@/lib/types/region'
 
 interface RegionSelectorProps {
-  regions: Region[]
-  currentRegion?: Region | null
+  regions: RegionSummary[]
+  currentRegion?: RegionSummary | null
   disabled: boolean
   onRegionChange: (regionId: string) => Promise<void>
 }

@@ -1,5 +1,5 @@
-import FooterBar from '@/components/layout/footer'
-import { SiteHeader } from '@/components/layout/header'
+import FooterBar from '@/components/layout/footer/footer-bar'
+import SiteHeader from '@/components/layout/header/site-header'
 
 export default function MainLayout({
   children,

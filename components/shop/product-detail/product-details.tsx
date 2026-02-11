@@ -4,7 +4,11 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import SizeSelector from './size-selector'
 import { formatPrice } from '@/lib/utils'
-import type { SizeOption, ProductVariant, ProductOption } from './types'
+import type {
+  SizeOption,
+  ProductVariant,
+  ProductOption,
+} from '@/lib/types/product-detail'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Info } from 'lucide-react'
 import { addItemToCart } from '@/lib/data/cart'

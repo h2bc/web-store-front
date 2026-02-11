@@ -2,16 +2,19 @@
 
 import { sdk } from '@/lib/medusa'
 import { cached } from '@/lib/cache'
+import type { HttpTypes } from '@medusajs/types'
+import type { RegionSummary } from '@/lib/types/region'
 
 const CACHE_REVALIDATE_TIME = 3600
 
 const fetchRegionsFromAPI = cached(
-  async () => {
+  async (): Promise<RegionSummary[]> => {
     const { regions } = await sdk.store.region.list()
-    return regions.map((r) => ({
+    return regions.map((r: HttpTypes.StoreRegion) => ({
       id: r.id,
       name: r.name,
-      shortName: r.metadata?.shortName || '???',
+      shortName:
+        typeof r.metadata?.shortName === 'string' ? r.metadata.shortName : '???',
       currencyCode: r.currency_code,
     }))
   },

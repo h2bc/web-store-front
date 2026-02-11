@@ -1,6 +1,6 @@
 import ProductCard from './product-card'
 import NoProductsLabel from './no-products-label'
-import type { ProductItem } from '@/app/(main)/shop/types'
+import type { ProductItem } from '@/lib/types/product'
 
 const PRIORITY_COUNT = 4
 

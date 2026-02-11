@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { cn, formatPrice } from '@/lib/utils'
 import { screens } from '@/lib/breakpoints'
-import type { ProductItem } from '@/app/(main)/shop/types'
+import type { ProductItem } from '@/lib/types/product'
 
 interface ProductCardProps extends Omit<ProductItem, 'category'> {
   priority?: boolean
