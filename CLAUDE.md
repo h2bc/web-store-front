@@ -82,7 +82,7 @@ Examples:
 - Regions/currencies are managed via cookies with a 1-year expiration
 - Cookie utilities in `lib/cookies.ts` (`getRegionId`, `setRegionId`)
 - Region data fetched from Medusa backend with custom cache wrapper (`cached` from `lib/cache.ts`, 1-hour revalidation)
-- Middleware (`middleware.ts`) sets default region_id cookie if not present
+- Proxy (`proxy.ts`) sets default region_id cookie if not present
 - Fallback to `NEXT_PUBLIC_DEFAULT_REGION_ID` environment variable
 - Selected via region selector in header
 
@@ -111,7 +111,7 @@ Required in `.env.local` (see `.env.example`):
 
 - `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` - Medusa store API key
 - `NEXT_PUBLIC_MEDUSA_BACKEND_URL` - Medusa backend URL (defaults to http://localhost:9000)
-- `NEXT_PUBLIC_DEFAULT_REGION_ID` - Fallback region ID (used by middleware)
+- `NEXT_PUBLIC_DEFAULT_REGION_ID` - Fallback region ID (used by proxy)
 - `NEXT_PUBLIC_BASE_URL` - Frontend URL (defaults to http://localhost:3000)
 - `DISABLE_CACHE` - Set to `true` to disable Next.js caching during development (optional, defaults to false)
 
@@ -128,7 +128,7 @@ Required in `.env.local` (see `.env.example`):
 - Image optimization configured for Medusa backend (`localhost:9000/static/**`)
 - Cache headers set for static assets (products, fonts: 1 year immutable)
 - Turbopack enabled for dev and build
-- Middleware runs on all routes except API routes, static files, and Next.js internal routes
+- Proxy runs on all routes except API routes, static files, and Next.js internal routes
 
 ### Code Patterns
 

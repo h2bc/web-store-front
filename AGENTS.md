@@ -32,7 +32,7 @@ No testing framework is configured yet; add relevant tests when introducing crit
 ### State & Cookies
 
 - Region and cart IDs persist via utilities in `lib/cookies.ts`.
-- Middleware (`middleware.ts`) seeds default region selection.
+- Proxy (`proxy.ts`) seeds default region selection.
 
 ### Styling
 
@@ -60,4 +60,3 @@ No testing framework is configured yet; add relevant tests when introducing crit
 
 - `CLAUDE.md` contains extra context tailored for Claude Code. Keep both documents aligned when making substantial structural changes.
 - If you automate tasks (codegen, scaffolding), note commands and generated files before exiting.
-
