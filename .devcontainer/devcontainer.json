@@ -1,6 +1,6 @@
 {
   "name": "h2bc-web-dev",
-  "image": "node:20-bookworm",
+  "image": "node:25",
   "workspaceFolder": "/workspace",
   "runArgs": ["--network=h2bc-web-dev"],
   "mounts": [
@@ -8,7 +8,7 @@
     "source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent.sock,type=bind",
     "type=bind,source=${localEnv:HOME}/.codex-shared,target=/codex"
   ],
-  "postCreateCommand": "npm i",
+  "postCreateCommand": "pnpm i --frozen",
   "remoteEnv": {
     "SSH_AUTH_SOCK": "/ssh-agent.sock",
     "CODEX_HOME": "/codex"
@@ -16,6 +16,9 @@
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
       "username": "node"
+    },
+    "ghcr.io/devcontainers-extra/features/pnpm:2": {
+      "version": "10"
     }
   },
   "customizations": {
