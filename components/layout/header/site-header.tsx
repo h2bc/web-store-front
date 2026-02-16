@@ -4,18 +4,26 @@ import NavLinks from './nav-links'
 import BurgerMenu from './burger-menu'
 import RegionSelector from './region-selector'
 import CartPreview from '@/components/cart/preview/cart-preview'
-import { getRegions } from '@/lib/data/regions'
 import ClientToastErrorHandler from '@/components/feedback/client-toast-error-handler'
-import { getRegionId, setRegionId } from '@/lib/cookies'
+import { setRegionId } from '@/lib/cookies'
 import { getCart } from '@/lib/data/cart'
+import type { RegionSummary } from '@/lib/types/region'
 
-export default async function SiteHeader() {
-  const regionId = await getRegionId()
-  const currentRegionError = !regionId ? 'Failed to load region' : null
-  const { regions, error: regionsError } = await getRegions()
-  const regionSelectorDisabled = !!regionsError || regions.length <= 1
-  const currentRegion = regions.find((r) => r.id === regionId) || null
+interface SiteHeaderProps {
+  regions: RegionSummary[]
+  currentRegion: RegionSummary | null
+  regionSelectorDisabled: boolean
+  regionsError: string | null
+  currentRegionError: string | null
+}
 
+export default async function SiteHeader({
+  regions,
+  currentRegion,
+  regionSelectorDisabled,
+  regionsError,
+  currentRegionError,
+}: SiteHeaderProps) {
   const { cart } = await getCart()
 
   return (
@@ -24,18 +32,9 @@ export default async function SiteHeader() {
         <div className="grid grid-cols-3 items-center">
           {/* LEFT */}
           <div className="flex items-center gap-2">
-            {/* mobile: burger + region selector */}
+            {/* mobile: burger */}
             <div className="md:hidden">
               <BurgerMenu />
-            </div>
-
-            <div className="md:hidden">
-              <RegionSelector
-                regions={regions}
-                currentRegion={currentRegion}
-                disabled={regionSelectorDisabled}
-                onRegionChange={setRegionId}
-              />
             </div>
 
             {/* desktop: logo on left */}

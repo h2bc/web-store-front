@@ -2,6 +2,7 @@
 
 import { ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,21 +41,30 @@ export default function RegionSelector({
         <Button
           variant="ghost"
           disabled={disabled || isPending}
-          className="gap-1"
+          className="gap-1 md:px-6"
         >
           {displayLabel}
           <ChevronDown size={16} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
-        {regions.map((region) => (
-          <DropdownMenuItem
-            key={region.id}
-            onClick={() => handleRegionChange(region.id)}
-          >
-            {region.name}
-          </DropdownMenuItem>
-        ))}
+      <DropdownMenuContent align="start" className="min-w-48 p-2">
+        {regions.map((region) => {
+          const isCurrent = region.id === currentRegion?.id
+
+          return (
+            <DropdownMenuItem
+              key={region.id}
+              onClick={() => handleRegionChange(region.id)}
+              className={cn(
+                'px-5 py-1.5 text-sm',
+                isCurrent ? 'font-bold' : 'font-normal'
+              )}
+            >
+              <span className="inline-block w-3">{isCurrent ? '>' : ''}</span>
+              <span>{region.name}</span>
+            </DropdownMenuItem>
+          )
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   )

@@ -11,9 +11,9 @@ export default function CategoryFilter({
   return (
     <>
       {/* Mobile horizontal filter bar */}
-      <div className="lg:hidden overflow-x-scroll">
+      <div className="lg:hidden overflow-x-auto">
         <div
-          className="flex w-max mx-auto whitespace-nowrap"
+          className="flex w-max mx-auto whitespace-nowrap pb-3"
           role="tablist"
           aria-label="Product categories"
         >
