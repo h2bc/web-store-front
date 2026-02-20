@@ -14,7 +14,9 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet'
+import { Separator } from '@/components/ui/separator'
 import CartPreviewItem from './cart-preview-item'
+import CartEmptyState from '@/components/cart/cart-empty-state'
 import type { HttpTypes } from '@medusajs/types'
 
 interface CartPreviewProps {
@@ -89,7 +91,8 @@ export default function CartPreview({ cart }: CartPreviewProps) {
               </div>
 
               {/* Free Shipping Alert */}
-              <div className="border-t pt-4 pb-2">
+              <Separator className="mt-2" />
+              <div className="pt-4 pb-2">
                 <p className="text-sm text-muted-foreground text-center">
                   Free shipping above €30 (LT) / €60 (Europe).{' '}
                   <Link
@@ -125,15 +128,7 @@ export default function CartPreview({ cart }: CartPreviewProps) {
             </>
           ) : (
             <div className="flex-1 flex items-center justify-center">
-              <div className="text-center text-muted-foreground">
-                <ShoppingBag className="mx-auto h-12 w-12 mb-4 opacity-50" />
-                <p>Your cart is empty</p>
-                <Button asChild className="mt-4" variant="outline">
-                  <Link href="/shop" onClick={handleNavigateFromDrawer}>
-                    Continue shopping
-                  </Link>
-                </Button>
-              </div>
+              <CartEmptyState onNavigate={handleNavigateFromDrawer} />
             </div>
           )}
         </SheetContent>
