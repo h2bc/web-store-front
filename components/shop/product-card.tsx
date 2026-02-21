@@ -6,6 +6,7 @@ import type { ProductItem } from '@/lib/types/product'
 
 interface ProductCardProps extends Omit<ProductItem, 'category'> {
   priority?: boolean
+  enableHoverImage?: boolean
 }
 
 export default function ProductCard({
@@ -17,8 +18,10 @@ export default function ProductCard({
   soldOut,
   priority,
   currencyCode,
+  enableHoverImage = true,
 }: ProductCardProps) {
   const href = `/shop/${slug}`
+  const showHoverImage = !!hoverImage && enableHoverImage
 
   return (
     <div className="group w-full max-w-sm mx-auto">
@@ -34,13 +37,13 @@ export default function ProductCard({
               sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
               className={cn(
                 'pink-img-shadow object-contain transition-opacity duration-200 ease-out',
-                hoverImage &&
+                showHoverImage &&
                   'group-hover:opacity-0 group-focus-visible:opacity-0'
               )}
               draggable={false}
               priority={!!priority}
             />
-            {hoverImage && (
+            {showHoverImage && (
               <Image
                 src={hoverImage}
                 alt={name}
