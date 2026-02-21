@@ -14,6 +14,8 @@ export default function ShippingInfoAlert({
   descriptionClassName,
   onLearnMoreClick,
 }: ShippingInfoAlertProps) {
+  const learnMoreProps = onLearnMoreClick ? { onClick: onLearnMoreClick } : {}
+
   return (
     <Alert className={className}>
       <Info className="h-4 w-4" />
@@ -22,7 +24,7 @@ export default function ShippingInfoAlert({
         <Link
           href="/shipping-returns"
           className="underline hover:text-foreground"
-          onClick={() => onLearnMoreClick?.()}
+          {...learnMoreProps}
         >
           Learn more
         </Link>
