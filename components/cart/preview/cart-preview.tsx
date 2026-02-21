@@ -78,7 +78,7 @@ export default function CartPreview({ cart }: CartPreviewProps) {
           {cart?.items && cart.items.length > 0 ? (
             <>
               {/* Cart Items - scrollable area */}
-              <div className="flex-1 overflow-y-auto -mx-6 px-8 -mt-10 pt-12 pb-2 divide-y">
+              <div className="flex-1 overflow-y-auto divide-y">
                 {cart.items.map((item) => (
                   <CartPreviewItem
                     key={item.id}
@@ -91,7 +91,7 @@ export default function CartPreview({ cart }: CartPreviewProps) {
               </div>
 
               {/* Free Shipping Alert */}
-              <Separator className="mt-2" />
+              <Separator />
               <div className="pt-4 pb-2">
                 <p className="text-sm text-muted-foreground text-center">
                   Free shipping above €30 (LT) / €60 (Europe).{' '}
