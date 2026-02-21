@@ -7,7 +7,21 @@
 
 @layer utilities {
   .pink-img-shadow {
-    filter: drop-shadow(0 0 40px rgba(236, 72, 153, 0.32));
+    --pink-glow-blur: 22px;
+    --pink-glow-alpha: 0.19;
+    filter: drop-shadow(
+      0 0 var(--pink-glow-blur) rgba(236, 72, 153, var(--pink-glow-alpha))
+    );
+  }
+
+  .pink-img-shadow-sm {
+    --pink-glow-blur: 22px;
+    --pink-glow-alpha: 0.19;
+  }
+
+  .pink-img-shadow-lg {
+    --pink-glow-blur: 32px;
+    --pink-glow-alpha: 0.28;
   }
 }
 

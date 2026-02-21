@@ -3,6 +3,7 @@ import { AlertCircle } from 'lucide-react'
 import Heading from '@/components/layout/heading'
 import CartLineItem from '@/components/cart/cart-line-item'
 import CartEmptyState from '@/components/cart/cart-empty-state'
+import ShippingInfoAlert from '@/components/cart/shipping-info-alert'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -50,10 +51,7 @@ export default async function CartPage() {
             <section className="rounded-xl border divide-y">
               {items.map((item) => (
                 <div key={item.id} className="px-4 sm:px-6">
-                  <CartLineItem
-                    item={item}
-                    currencyCode={cart?.currency_code}
-                  />
+                  <CartLineItem item={item} currencyCode={cart?.currency_code} />
                 </div>
               ))}
             </section>
@@ -82,6 +80,8 @@ export default async function CartPage() {
                       {formatPrice(cart?.item_total, cart?.currency_code)}
                     </span>
                   </div>
+
+                  <ShippingInfoAlert />
 
                   <div className="flex flex-col gap-2 pt-2">
                     <Button asChild size="lg">

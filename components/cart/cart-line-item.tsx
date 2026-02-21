@@ -24,6 +24,8 @@ const imageSizeClasses = {
   md: 'w-24 h-24',
 } as const
 
+const cartImageShadowClass = 'pink-img-shadow-sm'
+
 export default function CartLineItem({
   item,
   currencyCode,
@@ -61,7 +63,7 @@ export default function CartLineItem({
     <div className="flex gap-4 py-4">
       {thumbnail && (
         <div
-          className={`relative shrink-0 ${imageSizeClasses[imageSize]} overflow-visible pink-img-shadow`}
+          className={`relative shrink-0 ${imageSizeClasses[imageSize]} overflow-visible pink-img-shadow ${cartImageShadowClass}`}
         >
           {slug ? (
             <Link

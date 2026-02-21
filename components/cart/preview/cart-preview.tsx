@@ -14,9 +14,9 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet'
-import { Separator } from '@/components/ui/separator'
 import CartPreviewItem from './cart-preview-item'
 import CartEmptyState from '@/components/cart/cart-empty-state'
+import ShippingInfoAlert from '@/components/cart/shipping-info-alert'
 import type { HttpTypes } from '@medusajs/types'
 
 interface CartPreviewProps {
@@ -78,7 +78,7 @@ export default function CartPreview({ cart }: CartPreviewProps) {
           {cart?.items && cart.items.length > 0 ? (
             <>
               {/* Cart Items - scrollable area */}
-              <div className="flex-1 overflow-y-auto divide-y">
+              <div className="flex-1 overflow-y-auto divide-y px-3 sm:px-4">
                 {cart.items.map((item) => (
                   <CartPreviewItem
                     key={item.id}
@@ -91,19 +91,11 @@ export default function CartPreview({ cart }: CartPreviewProps) {
               </div>
 
               {/* Free Shipping Alert */}
-              <Separator />
-              <div className="pt-4 pb-2">
-                <p className="text-sm text-muted-foreground text-center">
-                  Free shipping above €30 (LT) / €60 (Europe).{' '}
-                  <Link
-                    href="/shipping-returns"
-                    className="underline hover:text-foreground"
-                    onClick={handleNavigateFromDrawer}
-                  >
-                    Learn more
-                  </Link>
-                </p>
-              </div>
+              <ShippingInfoAlert
+                className="mt-4"
+                descriptionClassName="text-center"
+                onLearnMoreClick={handleNavigateFromDrawer}
+              />
 
               <div className="flex items-center justify-between py-2 text-sm">
                 <span className="text-muted-foreground">Subtotal (VAT included)</span>
