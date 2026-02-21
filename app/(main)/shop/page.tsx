@@ -22,6 +22,7 @@ export default async function ShopPage({
   const { device } = userAgent({ headers: requestHeaders })
   const enableHoverImages =
     device.type !== 'mobile' && device.type !== 'tablet'
+  const productPriorityCount = device.type === 'mobile' ? 1 : 4
 
   const { products, error: productsError } = await getProducts()
 
@@ -65,6 +66,7 @@ export default async function ShopPage({
           <ProductGrid
             products={filtered}
             enableHoverImages={enableHoverImages}
+            priorityCount={productPriorityCount}
           />
         </section>
       </div>
